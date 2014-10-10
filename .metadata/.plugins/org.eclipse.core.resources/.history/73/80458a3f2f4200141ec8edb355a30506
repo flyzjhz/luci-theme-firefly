@@ -1,0 +1,22 @@
+/*
+ * UdpClient.h
+ *
+ *  Created on: 2014-9-22
+ *      Author: wbj
+ */
+
+#ifndef UDPCLIENT_H_
+#define UDPCLIENT_H_
+#include "UdpPackageBase.h"
+
+class UdpClient : public UdpPackageBase {
+public:
+	UdpClient();
+	virtual ~UdpClient();
+
+	int mksock(int type);
+	void BindSock(int sock);
+	stUserListNode GetUser(char *username);
+};
+
+#endif /* UDPCLIENT_H_ */

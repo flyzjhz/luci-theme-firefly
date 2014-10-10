@@ -1,0 +1,54 @@
+/*
+ * UdpClient.cpp
+ *
+ *  Created on: 2014-9-22
+ *      Author: wbj
+ */
+
+#include "UdpClient.h"
+
+UdpClient::UdpClient() {
+	// TODO Auto-generated constructor stub
+
+}
+
+UdpClient::~UdpClient() {
+	// TODO Auto-generated destructor stub
+}
+
+void UdpClient::BindSock(int sock)
+{
+	sockaddr_in sin;
+	sin.sin_addr.s_addr = INADDR_ANY;
+	sin.sin_family = PF_INET;
+	sin.sin_port = htons(g_nClientPort);
+
+	if (bind(sock, (struct sockaddr*)&sin, sizeof(sin)) < 0)
+		throw Exception("bind error");
+}
+
+int UdpClient::mksock(int type)
+{
+	int sock = socket(PF_INET,SOCK_DGRAM,0);
+	if (sock < 0)
+	{
+		printf("create socket error");
+		throw Exception("");
+	}
+	return sock;
+}
+
+stUserListNode UdpClient::GetUser(char * username)
+{
+	for(int i = 0;i < UserNum;i++)
+	{
+		if( strcmp( UserList[i].userName, username) == 0 )
+		{
+			return UserList[i];
+		}
+	}
+	throw Exception("not find this user");
+}
+
+
+

@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+'''
+Created on 2014-9-23
+
+@author: wbj
+'''
+from src.UdpPackageModule import UdpPackage
+from app.ApplicationInstance import ApplicationInstance
+from src.SqlManage import FFDB
+import time
+import sys
+import os
+from curses.ascii import FF
+
+
+def usr_start():
+    print """Start the Service"""
+    ApplicationInstance( '/tmp/myapp.pid' )
+    p = UdpPackage()
+    p.listen();
+    while True:
+        msg=raw_input('>>')
+        if msg == "quit" :
+            usr_exit()
+        elif msg == "list":
+            p.print_all()
+        elif len(msg) > 0 :
+            p.get_detail_by_name(msg)
+        
+def test_mode():
+    p = UdpPackage()
+    p.listen();
+    while True:
+        time.sleep(1)
+        
+    
+def usr_exit():
+    pid = os.popen("cat /tmp/myapp.pid").read()
+    #p.close()
+    os.popen("kill "+pid).read()
+    print """Stop ... """
+    
+def usr_restart():
+    print """Ready to Restart the Service ..."""
+    usr_exit()
+    time.sleep(1)
+    usr_start()
+
+def usage():
+    print """Usage:
+    UdpServer start
+        Use to start the Service
+    UdpServer stop
+        Use to quit the Service
+    UdpServer restart
+        Use to restart the Service     
+    """
+
+if __name__ == '__main__':
+   # test_mode()
+
+    if  len(sys.argv) > 1:
+        if  sys.argv[1] == "start" :
+            usr_start()
+        elif sys.argv[1] == "stop" :
+            usr_exit()
+        elif sys.argv[1] == "restart" :
+            usr_restart()
+        else :
+            usage()
+
+    #p = UdpPackage()
+    #p.listen();
+    #while True:
+    #    time.sleep(1)  
+        

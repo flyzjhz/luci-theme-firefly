@@ -1,0 +1,7 @@
+MODULES_MANAGER_V2
+UdpServer|/home/wbj/project/TestUdp/Python/UdpServer/UdpServer.py
+app.ApplicationInstance|/home/wbj/project/TestUdp/Python/UdpServer/app/ApplicationInstance.py
+app.__init__|/home/wbj/project/TestUdp/Python/UdpServer/app/__init__.py
+src.SqlManage|/home/wbj/project/TestUdp/Python/UdpServer/src/SqlManage.py
+src.UdpPackageModule|/home/wbj/project/TestUdp/Python/UdpServer/src/UdpPackageModule.py
+src.__init__|/home/wbj/project/TestUdp/Python/UdpServer/src/__init__.py

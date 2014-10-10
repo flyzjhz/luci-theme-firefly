@@ -1,0 +1,38 @@
+'''
+Created on 2014-9-23
+
+@author: wbj
+'''
+import copy
+
+class FFDB(object):
+    '''
+    Data Object Format: ["username","ip address",port]
+    '''
+
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        self._mem = []
+        
+    def append(self,obj):
+        """ If this is a new user or had change the ip or port , update the list """
+        if obj not in self._mem:
+            """ Remove the old data , and insert the new one"""
+            self._mem = [ i for i in self._mem if i[0] != obj[0]]
+            self._mem.append(copy.deepcopy(obj))
+            
+    def get_detail_by_name(self,name):
+        for i in self._mem:
+            if name == i[0] :
+                return [i[1],i[2]]
+        return None
+        
+    def print_all(self):
+        for i in self._mem:
+            print i
+            
+            
+            

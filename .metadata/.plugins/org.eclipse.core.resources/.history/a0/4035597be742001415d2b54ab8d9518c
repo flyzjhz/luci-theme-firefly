@@ -1,0 +1,62 @@
+'''
+Created on 2014-9-23
+
+@author: wbj
+'''
+import socket
+import thread
+import threading 
+
+HOST = "168.168.2.18"
+PORT = 57777
+SINGLE_BUFFSIZE = 1024
+
+class UdpPackage(threading.Thread):
+    '''
+    This is a class to handle Udp Package
+    '''
+
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        threading.Thread.__init__(self)  
+        self.thread_stop = False
+        self.thread_num = 3 
+        
+        self._host = HOST
+        self._port = PORT
+        self._buffsize = SINGLE_BUFFSIZE
+        
+        self._socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
+        self._socket.connect(("www.163.com",5000))
+        print self._socket.getsockname();
+        self._socket.close()
+        self._socket.bind((self._host,self._port))
+        print "Current Addr:",self._host," Port:",self._port
+        
+        
+        
+    def handle_msg(self,data,addr):
+        print "Got connect from" ,addr,":"
+        print data
+        thread.exit_thread()  
+        
+    def run(self): #Overwrite run() method, put what you want the thread do here  
+        while not self.thread_stop:  
+            data , addr =  self._socket.recvfrom(self._buffsize)
+            thread.start_new_thread(self.handle_msg, (data,addr))  
+            
+    def stop(self):  
+        self.thread_stop = True  
+        
+    def listen(self):
+        self.start()
+        
+    def close(self):
+        self.stop()
+        
+            
+    
+        

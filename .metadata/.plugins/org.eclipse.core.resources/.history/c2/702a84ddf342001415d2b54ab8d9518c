@@ -1,0 +1,77 @@
+'''
+Created on 2014-9-23
+
+@author: wbj
+'''
+import socket
+import thread
+import threading 
+import re
+from src.SqlManage import FFDB
+
+DEFAULT_HOST = "168.168.2.18"  
+PORT = 57777
+SINGLE_BUFFSIZE = 1024
+
+class UdpPackage(threading.Thread):
+    '''
+    This is a class to handle Udp Package
+    '''
+
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        """ Thread """
+        threading.Thread.__init__(self)  
+        self.thread_stop = False
+        
+        """ data base """
+        self._db = FFDB()
+
+        """ Get host ip """
+        self._host = socket.gethostbyname(socket.gethostname())
+        self._port = PORT
+        if  re.match('\d+\.\d+\.\d+\.\d+',self.get_host_ip()):
+            self._host = self.get_host_ip()
+        self._buffsize = SINGLE_BUFFSIZE
+        
+        """ start bind udp port """
+        self._socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
+        self._socket.bind((self._host,self._port))
+        print "Current Addr:",self._host," Port:",self._port
+        
+    def get_host_ip(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM);
+        s.connect(("www.t-firefly.com", self._port))
+        ipAndPort = s.getsockname()
+        return ipAndPort[0]
+        
+    def handle_msg(self,data,addr):
+        print "Got connect from" ,addr,":"
+        print data
+        thread.exit_thread()  
+        
+    def run(self): #Overwrite run() method, put what you want the thread do here  
+        while not self.thread_stop:  
+            data ,( addr,port ) =  self._socket.recvfrom(self._buffsize)
+            thread.start_new_thread(self.handle_msg, (data,addr))  
+            """ record to database """
+            print port
+            #self._db.append([data,addr,port])
+            
+    def stop(self):  
+        self.thread_stop = True  
+        
+    def listen(self):
+        self.start()
+        
+    def close(self):
+        self.stop()
+        
+        
+        
+            
+    
+        

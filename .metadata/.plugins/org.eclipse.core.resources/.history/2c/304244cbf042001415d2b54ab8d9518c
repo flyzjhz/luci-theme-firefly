@@ -1,0 +1,36 @@
+'''
+Created on 2014-9-23
+
+@author: wbj
+'''
+import copy
+
+class FFDB(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        self._mem = []
+        
+    def append(self,obj):
+        """ If this is a new user or had change the ip or port , update the list """
+        if obj not in self._mem:
+            self._mem = [ i for i in self._mem if i[0] != obj[0]]
+            """
+            for i in self._mem:
+                if obj[0] in i :
+                    filter(lambda x:x !=4,self._mem)
+                    """
+            self._mem.append(copy.deepcopy(obj))
+        
+    def print_all(self):
+        for i in self._mem:
+            print i
+            
+            
+            

@@ -1,0 +1,26 @@
+'''
+Created on 2014-9-23
+
+@author: wbj
+'''
+import copy
+
+class FFDB(object):
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, params):
+        '''
+        Constructor
+        '''
+        self._mem = []
+        
+    def append(self,obj):
+        if obj not in self._mem :
+            self._mem.append(copy.deepcopy(obj))
+        
+    def print_all(self):
+        for i in self._mem:
+            print i

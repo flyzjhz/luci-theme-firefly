@@ -1,0 +1,57 @@
+/*
+ * UdpPackageBase.h
+ *
+ *  Created on: 2014-9-22
+ *      Author: wbj
+ */
+
+#ifndef UDPPACKAGEBASE_H_
+#define UDPPACKAGEBASE_H_
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <assert.h>
+#include <sys/select.h>
+#include <unistd.h>
+#include <pthread.h>
+#include "Exception.h"
+
+#define SERVER_PORT 50001
+
+// 客户节点信息
+typedef struct stUserListNode_S
+{
+	char userName[10];
+	unsigned int ip;
+	unsigned short port;
+}stUserListNode;
+
+
+class UdpPackageBase {
+
+protected:
+	const unsigned short g_nClientPort = 9896;
+	const unsigned short g_nServerPort = SERVER_PORT;
+
+	stUserListNode UserList[20];
+	int UserNum;
+
+	int PrimaryUDP;
+	char UserName[10];
+	char ServerIP[20];
+	bool RecvedACK;
+
+public:
+	UdpPackageBase();
+	virtual ~UdpPackageBase();
+
+
+};
+
+#endif /* UDPPACKAGEBASE_H_ */

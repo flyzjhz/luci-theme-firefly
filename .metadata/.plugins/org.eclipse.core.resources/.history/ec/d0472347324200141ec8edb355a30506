@@ -1,0 +1,136 @@
+/*
+ * UdpClient.cpp
+ *
+ *  Created on: 2014-9-22
+ *      Author: wbj
+ */
+
+#include "UdpClient.h"
+
+UdpClient::UdpClient() {
+	// TODO Auto-generated constructor stub
+
+}
+
+UdpClient::~UdpClient() {
+	// TODO Auto-generated destructor stub
+}
+/*
+ * 绑定端口
+ * sock:
+ */
+void UdpClient::bind_sock(int sock)
+{
+	sockaddr_in sin;
+	sin.sin_addr.s_addr = INADDR_ANY;
+	sin.sin_family = PF_INET;
+	sin.sin_port = htons(CLIENT_PORT);
+
+	if (bind(sock, (struct sockaddr*)&sin, sizeof(sin)) < 0)
+		throw Exception("bind error");
+}
+
+int UdpClient::mksock(int type)
+{
+	int sock = socket(PF_INET,SOCK_DGRAM,0);
+	if (sock < 0)
+	{
+		printf("create socket error");
+		throw Exception("");
+	}
+	return sock;
+}
+
+stUserListNode UdpClient::get_user(char * username)
+{
+	for(int i = 0;i < UserNum;i++)
+	{
+		if( strcmp( UserList[i].userName, username) == 0 )
+		{
+			return UserList[i];
+		}
+	}
+	throw Exception("not find this user");
+}
+
+/*
+ * 连接到服务器
+ * sock:
+ * username:用户名
+ * serverip:服务器IP
+ */
+void UdpClient::connect_to_server(int sock,char *username)
+{
+
+	sockaddr_in remote;
+	remote.sin_addr.s_addr = inet_addr(SERVER_IP);
+	remote.sin_family = PF_INET;
+	remote.sin_port = htons(SERVER_PORT);
+
+	/*新建一个消息buff*/
+	stMessage sendbuf;
+	sendbuf.iMessageType = LOGIN;   //登录
+
+	strncpy(sendbuf.message.loginmember.userName, username, 10);
+	/*发送套接字请求,登陆请求*/
+	sendto(sock, (const char*)&sendbuf, sizeof(sendbuf), 0, (const sockaddr*)&remote,sizeof(remote));
+	int usercount;
+	socklen_t fromlen = sizeof(remote);
+	/*等待服务器应答*/
+    for ( ;; )
+    {
+        fd_set readfds;
+        fd_set writefds;
+
+        FD_ZERO( &readfds );
+        FD_ZERO( &writefds );
+
+        FD_SET( sock, &readfds );
+        int maxfd = sock;
+
+        timeval time_out;
+        time_out.tv_sec = 2;
+        time_out.tv_usec = 0;
+
+        int n = select( maxfd + 1, &readfds, &writefds, NULL, &time_out );
+
+        if ( n > 0 )
+        {
+            if ( FD_ISSET( sock, &readfds ) )
+			{/*接受数据，登陆用户数目的消息*/
+				int iread = recvfrom(sock, (char *)&usercount, sizeof(int), 0, (sockaddr *)&remote, &fromlen);
+				if(iread<=0)
+				{
+					throw Exception("Login error\n");
+				}
+
+				break;/*接受成功后就跳出主循环*/
+			}
+        }
+        else if ( n < 0 )
+        {
+			throw Exception("Login error\n");
+        }
+        /*如果不成功还要发*/
+		sendto(sock, (const char*)&sendbuf, sizeof(sendbuf), 0, (const sockaddr*)&remote,sizeof(remote));
+    }
+
+	// 登录到服务端后，接收服务端发来的已经登录的用户的信息
+	cout<<"Have "<<usercount<<" users logined server:"<<endl;
+	UserNum = usercount;
+	for(int i = 0;i<usercount;i++)
+	{/*打印出没一个peer的信息*/
+		stUserListNode *node = new stUserListNode;
+		recvfrom(sock, (char*)node, sizeof(stUserListNode), 0, (sockaddr *)&remote, &fromlen);
+		memcpy(&UserList[i],node,sizeof(stUserListNode));
+		//ClientList.push_back(node);
+		cout<<"Username:"<<node->userName<<endl;
+		in_addr tmp;
+		tmp.s_addr = htonl(node->ip);
+		cout<<"UserIP:"<<inet_ntoa(tmp)<<endl;
+		cout<<"UserPort:"<<node->port<<endl;
+		cout<<""<<endl;
+		delete node;
+	}
+}
+

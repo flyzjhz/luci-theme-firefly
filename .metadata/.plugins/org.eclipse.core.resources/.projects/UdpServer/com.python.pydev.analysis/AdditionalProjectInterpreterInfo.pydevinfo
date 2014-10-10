@@ -1,0 +1,65 @@
+-- VERSION_4
+-- START DISKCACHE
+/home/wbj/project/.metadata/.plugins/org.eclipse.core.resources/.projects/UdpServer/com.python.pydev.analysis/v2_indexcache
+src.UdpPackageModule|1411458682000|/home/wbj/project/TestUdp/Python/UdpServer/src/UdpPackageModule.py
+src.SqlManage|1411459186000|/home/wbj/project/TestUdp/Python/UdpServer/src/SqlManage.py
+app.ApplicationInstance|1411448918000|/home/wbj/project/TestUdp/Python/UdpServer/app/ApplicationInstance.py
+src.__init__|1411442167000|/home/wbj/project/TestUdp/Python/UdpServer/src/__init__.py
+app.__init__|1411447381000|/home/wbj/project/TestUdp/Python/UdpServer/app/__init__.py
+UdpServer|1411459140000|/home/wbj/project/TestUdp/Python/UdpServer/UdpServer.py
+-- END DISKCACHE
+-- START DICTIONARY
+13
+8=UdpPackage.__init__
+2=src.UdpPackageModule
+9=ApplicationInstance.startApplication
+10=ApplicationInstance.check
+7=FFDB
+6=ApplicationInstance
+3=src.SqlManage
+1=app.ApplicationInstance
+12=FFDB.__init__
+13=ApplicationInstance.__init__
+5=UdpPackage
+4=UdpServer
+11=FFDB.append
+-- END DICTIONARY
+-- START TREE 1
+14
+app|1|ApplicationInstance!9@
+clo|1|close!18@
+def|1|DEFAULT_HOST!19@
+ffd|1|FFDB!25@
+get|1|get_detail_by_name!18@
+lis|1|listen!18@
+por|1|PORT!19@
+pri|1|print_all!18@
+sel|1|self!19@
+sin|1|SINGLE_BUFFSIZE!19@
+tes|1|test_mode!34@
+udp|1|UdpPackage!17@
+usa|1|usage!34@
+usr|3|usr_restart!34@usr_start!34@usr_exit!34@
+-- END TREE
+-- START TREE 2
+19
+__i|3|__init__!5&18@__init__!6&10@__init__!7&26@
+_bu|1|_buffsize!8&19@
+_db|1|_db!8&19@
+_fi|2|_file!9&11@_file!10&11@
+_ho|1|_host!8&19@
+_me|2|_mem!11&27@_mem!12&27@
+_po|1|_port!8&19@
+_so|1|_socket!8&19@
+app|1|append!7&26@
+che|1|check!6&10@
+exi|1|exitApplication!6&10@
+get|2|get_host_ip!5&18@get_detail_by_name!7&26@
+han|1|handle_msg!5&18@
+pid|1|pid_file!13&11@
+pri|1|print_all!7&26@
+run|1|run!5&18@
+sta|1|startApplication!6&10@
+sto|1|stop!5&18@
+thr|1|thread_stop!8&19@
+-- END TREE

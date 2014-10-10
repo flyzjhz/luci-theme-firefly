@@ -1,0 +1,9 @@
+INSTUPUdpServer
+/home/wbj/project/TestUdp/Python/UdpServer/UdpServer.py
+INFOS:&&2|1|2|0&&2|3|2|0&&2|4|2|0&&2|5|2|0&&2|6|2|0
+usr_start=1
+usr_restart=5
+usr_exit=4
+usage=6
+UdpServer=2
+test_mode=3

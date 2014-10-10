@@ -1,0 +1,12 @@
+INSTUPsrc.SqlManage
+/home/wbj/project/TestUdp/Python/UdpServer/src/SqlManage.py
+INFOS:&&1|1|2|0&&2|3|2|1&&3|4|2|5&&2|6|2|1&&3|4|2|7&&2|8|2|1&&2|9|2|1
+append=6
+__init__=3
+FFDB=1
+get_detail_by_name=8
+src.SqlManage=2
+print_all=9
+_mem=4
+FFDB.__init__=5
+FFDB.append=7

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.cdt.ui.CElementWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1411023388912_1" label="uboot" name="uboot">
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/uboot" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1411015245776_0" label="Window Working Set" name="Aggregate for window 1411015245775"/>
+</workingSetManager>
